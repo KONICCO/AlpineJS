@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Belajar Alpine</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div x-data="{nama: 'nico wibiyanto', angka:3, link:'<a href=\'https://google.com\'>youtube</a>'}"
+        class="container mx-auto w-1/2 text-center mt-10 bg-lime-200 p-10 rounded-xl shadow">
+
+        <h1
+            class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">
+
+            Halo, <span x-text="angka"></span> adalah bilangan: <span
+                x-text="angka % 2 === 0 ? 'Genap' : 'Ganjil' "></span>
+
+        </h1>
+        <!-- section -->
+        <br>
+        <h1
+            class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">
+
+            Halo, <span x-html="link"></span>
+
+        </h1>
+    </div>
+    <!--  section-->
+    <div x-data="{open: false}" class="container mx-auto w-1/2 text-center mt-10 bg-lime-200 p-10 rounded-xl shadow">
+        <!--  section-->
+        <!-- <button @click="open = !open" x-text="open  ? 'tutup' : 'buka'"
+            class="py-2 px-5 bg-slate-600 text-white rounded-md">Buka</button>
+
+        <div x-show="open" class="w-3/4 mx-auto mt-4 p-5 bg-blue-400 rounded text-white">
+
+            Lorem ipsum dolor sit amet ...
+
+        </div> -->
+        <!-- x if -->
+        <!-- <button @click="open = !open" x-text="open  ? 'tutup' : 'buka'"
+            class="py-2 px-5 bg-slate-600 text-white rounded-md">Buka</button>
+        <template x-if="open">
+            <div x-show="open" class="w-3/4 mx-auto mt-4 p-5 bg-blue-400 rounded text-white">
+
+                Lorem ipsum dolor sit amet ...
+
+            </div>
+        </template> -->
+        <!-- transisi -->
+        <!-- <button @click="open = !open" x-text="open  ? 'tutup' : 'buka'"
+            class="py-2 px-5 bg-slate-600 text-white rounded-md">Buka</button>
+
+        <div x-show="open" x-transition:enter.duration.1000ms
+            class="w-3/4 mx-auto mt-4 p-5 bg-blue-400 rounded text-white">
+
+            Lorem ipsum dolor sit amet ...
+
+        </div> -->
+
+        <!-- x bind dan outside-->
+        <button @click="open = !open" x-text="open  ? 'tutup' : 'buka'" @click.outside="open = false"
+            @keyup.esc.window="open=false" x-bind:class="open ? 'bg-blue-400':'bg-slate-600'"
+            class="py-2 px-5  text-white rounded-md">Buka</button>
+
+        <div x-show="open" x-transition class="w-3/4 mx-auto mt-4 p-5 bg-blue-400 rounded text-white">
+
+            Lorem ipsum dolor sit amet ...
+
+        </div>
+    </div>
+    <!-- event -->
+    <div x-data="{pesan: 'halo wpu'}" @log="alert('make log oleh '+ $event.detail.nama)"
+        class="container mx-auto w-3/4 text-center mt-10 bg-red-200 p-10 rounded-xl shadow">
+        <button x-on:click="ubahwarna" id="Tombolditeken" data-pesan="pesan berhasil"
+            class=" bg-green-400 py-2 px-5  text-white rounded-md">clik saya</button>
+
+
+        <form action="/post" method="post" @submit.prevent="alert('data dikirim oleh alpine prevent')">
+
+            <label for="nama" class="text-sm font-medium
+
+        text-gray-900 block mb-2">Masukkan Nama</label>
+
+            <input type="text" @keyup.shift.enter="alert('diketik')"
+                @keyup.debounce.750="console.log($event.target.value)" class="bg-gray-50 border border-gray-300 text-gray-900
+        
+        rounded-lg focus:ring-blue-500 focus:border-blue-500
+        
+        block w-full p-2.5">
+
+            <button @click="$dispatch('log', { nama: 'log dimana nico' })"
+                class="py-2 px-5  text-white rounded-md bg-blue-500 mt-4">klik log</button>
+
+
+            <button type="submit" class="py-2 px-5  text-white rounded-md bg-blue-500 mt-4"> kirm</button>
+        </form>
+
+
+
+    </div>
+
+    <div x-data="{pesan: 'halo wpu'}" @click="alert('div parent')"
+        class="container mx-auto w-3/4 text-center mt-10 bg-red-200 p-10 rounded-xl shadow">
+        <button x-on:click="ubahwarna" id="Tombolditeken" data-pesan="pesan berhasil"
+            class=" bg-green-400 py-2 px-5  text-white rounded-md">clik saya</button>
+
+
+
+
+        <label for="nama" class="text-sm font-medium
+
+        text-gray-900 block mb-2">Masukkan Nama</label>
+
+        <input type="text" @keyup.shift.enter="alert('diketik')" class="bg-gray-50 border border-gray-300 text-gray-900
+        
+        rounded-lg focus:ring-blue-500 focus:border-blue-500
+        
+        block w-full p-2.5">
+
+        <button @click.stop="alert('div child')" class="py-2 px-5  text-white rounded-md bg-blue-500 mt-4">
+            kirm</button>
+
+
+
+
+    </div>
+
+    <div x-data="{pesan: '', open: true, hobby:[]}" @log="alert('make log oleh '+ $event.detail.nama)"
+        class="container mx-auto w-3/4 text-center mt-10 bg-yellow-200 p-10 rounded-xl shadow mb-10">
+        <button x-on:click="ubahwarna" id="Tombolditeken" data-pesan="pesan berhasil"
+            class=" bg-green-400 py-2 px-5  text-white rounded-md">clik saya</button>
+        <label for="nama" class="text-sm font-mediumtext-gray-900 block mb-2">Masukkan Pesan</label>
+        <textarea x-model="pesan" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
+        <span x-text="pesan.length" class="text-lg " :class="pesan.length > 20 ? 'text-red-600' : 'text-white'"> </span>
+
+        <input type="checkbox" id="checkbox" x-model="open">
+        <label for="checkbox" x-text="open ? 'isi':'kosong'"></label>
+        <div class="mt-5">
+            <div class="flex item-center mb-2">
+                <input type="checkbox" id="menulis" value="menulis" x-model="hobby"
+                    class="w-4 h-4 text-blue-600 border-gray-300 rounded">
+                <label for="menulis" class="ml-2">Menulis</label>
+            </div>
+            <div class="flex item-center mb-2">
+                <input type="checkbox" id="menyanyi" value="menyanyi" x-model="hobby"
+                    class="w-4 h-4 text-blue-600 border-gray-300 rounded">
+                <label for="menyanyi" class="ml-2">menyanyi</label>
+            </div>
+            <div class="flex item-center mb-2">
+                <input type="checkbox" id="Ngoding" value="Ngoding" x-model="hobby"
+                    class="w-4 h-4 text-blue-600 border-gray-300 rounded">
+                <label for="Ngoding" class="ml-2">Ngoding</label>
+            </div>
+
+            <p class="text-left ">
+                <span x-text="hobby.map(h => h.charAt(0).toUpperCase()+ h.slice(1))"></span>
+            </p>
+        </div>
+    </div>
+
+    <script async defer>
+        function ubahwarna(e) {
+            e.target.classList.add('bg-red-500');
+        }
+
+
+    </script>
+</body>
+
+</html>
